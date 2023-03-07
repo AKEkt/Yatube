@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %} Профайл пользователя {{ author.get_full_name }}{% endblock %}
+{% block content %}
+  <div class="container py-5">
+    <div class="mb-5">        
+      <h1>Все посты пользователя {{ author.get_full_name }} </h1>
+      <h3>Всего постов: {{ author.posts.count }} </h3>
+      {% include 'posts/includes/following_author.html' %} 
+      {% for post in page_obj %}
+        <article>
+          <ul><br>
+            <li>
+              {% include 'posts/includes/date_post.html' %}
+            </li>
+            <li>
+              {% include 'posts/includes/group_post.html' %}
+            </li> 
+          </ul>
+          {% include 'posts/includes/image_post.html' %}
+          <p>{{ post.text }}</p><br>    
+          {% include 'posts/includes/all_post_group.html' %}  
+          {% include 'posts/includes/info_post.html' %}                      
+          {% if not forloop.last %}<hr><br>{% endif %}
+        </article>
+      {% endfor %} 
+      {% include 'posts/includes/paginator.html' %}      
+    </div>
+  </div>      
+{% endblock %}  

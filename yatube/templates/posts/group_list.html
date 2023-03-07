@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}{{ group.title }}{% endblock %}
+{% block content %}
+  <div class="container py-5">
+    <h1>{{ group.title }}</h1>
+    <p>{{ group.description }}</p>
+    {% for post in page_obj %}
+      <article>
+        <ul>
+          <li>
+            {% include 'posts/includes/author_post.html' %}
+            {% include 'posts/includes/all_post_user.html' %}
+          </li>
+          <li>
+            {% include 'posts/includes/date_post.html' %}
+          </li>
+        </ul>
+        <p>{{ post.text }}</p>
+        {% include 'posts/includes/info_post.html' %}   
+        {% include 'posts/includes/all_post_group.html' %}   
+        {% if not forloop.last %}<hr><br>{% endif %}
+        {% endfor %} 
+      </article>
+      {% include 'posts/includes/paginator.html' %}    
+  </div>
+{% endblock %}  

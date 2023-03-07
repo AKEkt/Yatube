@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block title %}Пост: {{ post.text|truncatechars:30 }}{% endblock %}
+{% block content %}
+<div class="container py-5">
+  <div class="row">
+    <aside class="col-12 col-md-3">
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">
+        {% include 'posts/includes/date_post.html' %}
+      </li>  
+      <li class="list-group-item">
+        {% include 'posts/includes/group_post.html' %}                
+        {% include 'posts/includes/all_post_group.html' %} 
+      </li>                        
+      <li class="list-group-item">
+        {% include 'posts/includes/author_post.html' %}
+      </li>
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        Всего постов автора:<span >{{ post.author.posts.count }}</span>
+      </li>
+      <li class="list-group-item">
+        {% include 'posts/includes/all_post_user.html' %}
+      </li>  
+    </ul>
+    </aside>
+    <article class="col-12 col-md-9">
+      {% include 'posts/includes/image_post.html' %}
+      <p>{{ post.text }}</p>
+      {% if request.user.is_authenticated %}
+        {% if request.user == post.author %}
+          <a class="btn btn-primary" href="{% url 'posts:post_edit' post_id=post.id %}">
+            редактировать запись
+          </a>
+        {% endif %}  
+      {% endif %}
+      {% include 'posts/includes/add_comment_post.html' %}
+    </article>
+  </div>  
+</div> 
+{% endblock %}

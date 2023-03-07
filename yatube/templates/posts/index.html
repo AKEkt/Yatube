@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %} Последние обновления на сайте {% endblock %}
+{% block content %}
+{% include 'posts/includes/switcher.html' %}
+{% load cache %}
+  <div class="container py-5">
+  <h1>Последние обновления на сайте</h1><br>
+  {% cache 20 index_page %}
+    {% for post in page_obj %}
+      <article>          
+        <ul>
+          <li>
+            {% include 'posts/includes/author_post.html' %}
+            {% include 'posts/includes/all_post_user.html' %}
+          </li>
+          <li>
+            {% include 'posts/includes/date_post.html' %}
+          </li>
+          <li>
+            {% include 'posts/includes/group_post.html' %}
+          </li> 
+        </ul>
+        {% include 'posts/includes/image_post.html' %}       
+        <p>{{ post.text }}</p><br> 
+        {% include 'posts/includes/info_post.html' %}       
+        {% include 'posts/includes/all_post_group.html' %}
+        {% if not forloop.last %}<hr><br>{% endif %}
+      </article>
+    {% endfor %} 
+    {% endcache %} 
+    {% include 'posts/includes/paginator.html' %}
+  </div>
+{% endblock %}
